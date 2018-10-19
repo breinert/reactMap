@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 // import { GoogleMap, Marker } from 'react-google-maps';
 import Maps from './components/Maps'
+import StartModal from './components/StartModal'
 import axios from 'axios'
 import './App.css';
 
@@ -8,6 +9,7 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      show: true,
       venues: [],
       venueLocation: [],
       markers: [
@@ -20,6 +22,7 @@ class App extends Component {
         {lat: 40.002127, lng: -83.021716},
       ],
     };
+    this.handleClose = this.handleClose.bind(this);
   }
 
   // componentDidMount() {
@@ -61,6 +64,12 @@ class App extends Component {
 
   }
 
+  handleClose = () => {
+    this.setState({
+      show: false
+    })
+    console.log('close');
+  }
 
   render() {
     return (
@@ -68,6 +77,10 @@ class App extends Component {
         <main>
           <Maps
           {...this.state}
+          />
+          <StartModal
+          {...this.state}
+          handleClose = {this.handleClose}
           />
         </main>
       </div>
