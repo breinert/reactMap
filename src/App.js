@@ -57,12 +57,13 @@ class App extends Component {
           return {
             lat: venue.venue.location.lat,
             lng: venue.venue.location.lng,
+            name: venue.venue.name,
             isOpen: false,
             isVisible: true
           };
         });
         this.setState({ venues, markers });
-      console.log(this.state.venues, this.state.markers);
+      console.log(this.state.venues, this.state.markers );
     })
       .catch(error => {
         console.error("error", error)
@@ -79,9 +80,9 @@ class App extends Component {
     this.setState({
       venueLocation: [marker.lat, marker.lng],
       center: { lat: marker.lat, lng: marker.lng },
-      markers: []
+      markers: [],
+      names: []
     });
-    console.log(this.state.venueLocation, this.state.center);
     this.getStores()
   }
 
@@ -99,7 +100,7 @@ class App extends Component {
     this.closeAllMarkers();
     marker.isOpen = true;
     this.setState({
-      markers: Object.assign(this.state.markers,marker)
+      markers: Object.assign(this.state.markers, marker)
     })
   }
 

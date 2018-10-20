@@ -17,7 +17,7 @@ const MyMapComponent = withScriptjs(withGoogleMap((props) =>
         {marker.isOpen &&
           <InfoWindow
           >
-          <p>{props.name}</p>
+          <p>{props.names[idx] || props.markers.name}</p>
           </InfoWindow>
           }
       </Marker>
