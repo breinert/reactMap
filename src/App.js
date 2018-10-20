@@ -12,6 +12,9 @@ class App extends Component {
       show: true,
       venues: [],
       venueLocation: [],
+      center: [
+        {lat: 40.027587, lng: -83.0624}
+      ],
       markers: [
         {lat: 40.0784, lng: -83.0377},
         {lat: 40.0440, lng: -83.0253},
@@ -21,54 +24,83 @@ class App extends Component {
         {lat: 40.023258, lng: -83.087907},
         {lat: 40.002127, lng: -83.021716},
       ],
+      names:  [
+        'Antrim Park',
+        'Park of Roses',
+        'Clinton-Como Park',
+        'Thompson Park',
+        'Burbank Park',
+        'Fancyburg Park',
+        'Olentangy Trail',
+    ]
     };
     this.handleClose = this.handleClose.bind(this);
+    this.handleMouseOver = this.handleMouseOver.bind(this);
+    this.handleGetNewData = this.handleGetNewData.bind(this);
   }
 
-  // componentDidMount() {
-  //   // if (prevState.venueLocation !== this.state.venueLocation){
-  //     this.getStores()
-  // }
-
   getStores() {
-    // const location = this.state.venueLocation;
-    // console.log(props.venueLocation);
     const endPoint = "https://api.foursquare.com/v2/venues/explore?"
     const parameters = {
       client_id: "JDO1KAGDULQO3ETFJ4EDPEHN203BEDKSD1HB5UUKRDP2R3H2",
       client_secret: "UWMFNIMGT33V31ZGCVI1GICMRK43DSYBJSNBNJTKC2ECKIHH",
       query: "coffee",
       limit: "5",
-      ll: "40.027587, -83.0624",
+      ll: this.state.venueLocation,
       v: "201811010",
     }
-    // const venues = this.state.venues;
-    // const markers = this.state.markers;
+
     axios.get(endPoint + new URLSearchParams(parameters))
     .then(response => {
-        const { venues } = response.data.response.groups[0].items;
-        const { markers } = venues.map(venue => {
+        const venues = response.data.response.groups[0].items;
+        const markers = venues.map(venue => {
           return {
-            lat: venue.location.lat,
-            lng: venue.location.lng,
+            lat: venue.venue.location.lat,
+            lng: venue.venue.location.lng,
             isOpen: false,
             isVisible: true
           };
-        })
+        });
         this.setState({ venues, markers });
-        console.log(response, venues, markers);
-      })
+      console.log(this.state.venues, this.state.markers);
+    })
       .catch(error => {
         console.error("error", error)
-    })
-
+      })
   }
 
   handleClose = () => {
     this.setState({
       show: false
     })
-    console.log('close');
+  }
+
+  handleGetNewData = (marker) => {
+    this.setState({
+      venueLocation: [marker.lat, marker.lng],
+      center: { lat: marker.lat, lng: marker.lng },
+      markers: []
+    });
+    console.log(this.state.venueLocation, this.state.center);
+    this.getStores()
+  }
+
+  closeAllMarkers = () => {
+    const markers = this.state.markers.map(marker => {
+      marker.isOpen = false;
+      return marker;
+    })
+    this.setState({
+      markers: Object.assign(this.state.markers, markers)
+    })
+  }
+
+  handleMouseOver = (marker) => {
+    this.closeAllMarkers();
+    marker.isOpen = true;
+    this.setState({
+      markers: Object.assign(this.state.markers,marker)
+    })
   }
 
   render() {
@@ -77,6 +109,8 @@ class App extends Component {
         <main>
           <Maps
           {...this.state}
+          handleMouseOver = {this.handleMouseOver}
+          handleGetNewData = {this.handleGetNewData}
           />
           <StartModal
           {...this.state}
