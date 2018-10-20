@@ -1,7 +1,7 @@
-import React, { Component } from 'react';
-// import { GoogleMap, Marker } from 'react-google-maps';
+import React, { Component } from 'react'
 import Maps from './components/Maps'
 import StartModal from './components/StartModal'
+import Sidebar from './components/Sidebar'
 import axios from 'axios'
 import './App.css';
 
@@ -10,6 +10,7 @@ class App extends Component {
     super(props);
     this.state = {
       show: true,
+      click: 0,
       venues: [],
       venueLocation: [],
       center: [
@@ -58,6 +59,7 @@ class App extends Component {
             lat: venue.venue.location.lat,
             lng: venue.venue.location.lng,
             name: venue.venue.name,
+            id: venue.venue.id,
             isOpen: false,
             isVisible: true
           };
@@ -70,6 +72,10 @@ class App extends Component {
       })
   }
 
+  getVenueInfo = () =>{
+
+  }
+
   handleClose = () => {
     this.setState({
       show: false
@@ -77,13 +83,18 @@ class App extends Component {
   }
 
   handleGetNewData = (marker) => {
-    this.setState({
-      venueLocation: [marker.lat, marker.lng],
-      center: { lat: marker.lat, lng: marker.lng },
-      markers: [],
-      names: []
-    });
-    this.getStores()
+    if (this.state.click === 0) {
+      this.setState({
+        venueLocation: [marker.lat, marker.lng],
+        center: { lat: marker.lat, lng: marker.lng },
+        markers: [],
+        names: [],
+        click: this.state.click + 1
+      });
+      this.getStores()
+    } else {
+      this.getVenueInfo()
+    }
   }
 
   closeAllMarkers = () => {
@@ -116,6 +127,9 @@ class App extends Component {
           <StartModal
           {...this.state}
           handleClose = {this.handleClose}
+          />
+          <Sidebar
+          {...this.state}
           />
         </main>
       </div>

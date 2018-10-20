@@ -13,6 +13,13 @@ code {
     monospace;
 }
 
+/* .App {
+  text-align: center;
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+} */
+
 .modal {
   position: fixed;
   z-index: 1010;
