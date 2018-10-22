@@ -21,8 +21,7 @@
   flex-flow: nowrap;
 }
 .sidebar {
-  display: flex;
-  flex-flow: nowrap;
+  display: block;
   width: 25%;
 }
 

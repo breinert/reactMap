@@ -13,10 +13,11 @@ const MyMapComponent = withScriptjs(withGoogleMap((props) =>
       key={idx}
       position={{ lat: marker.lat, lng: marker.lng }}
       onMouseOver={() => props.handleMouseOver(marker)}
+      onMouseOut={() => props.handleMouseOut(marker)}
       onClick={() => props.handleGetNewData(marker)} >
         {marker.isOpen &&
           <InfoWindow>
-            <p>{props.names[idx] || props.markers.name}</p>
+            <p>{props.markers.name}</p>
           </InfoWindow>
           }
       </Marker>
@@ -30,9 +31,9 @@ class Map extends React.Component {
       <MyMapComponent
         {...this.props}
         googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyDUZDt6xP79oqTXaAB6leSmMCYzZkc4Zdo"
-        loadingElement={<div style={{ height: `100%` }} />}
+        loadingElement={<div style={{ height: `100vh` }} />}
         containerElement={<div style={{ height: `100vh`, width: `75%` }} />}
-        mapElement={<div style={{ height: `100%` }} />}/>
+        mapElement={<div style={{ height: `100vh` }} />}/>
     )
   }
 }
