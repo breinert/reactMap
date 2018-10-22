@@ -118,20 +118,18 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <main>
-          <Maps
-          {...this.state}
-          handleMouseOver = {this.handleMouseOver}
-          handleGetNewData = {this.handleGetNewData}
-          />
-          <StartModal
-          {...this.state}
-          handleClose = {this.handleClose}
-          />
-          <Sidebar
-          {...this.state}
-          />
-        </main>
+        <Maps
+        {...this.state}
+        handleMouseOver = {this.handleMouseOver}
+        handleGetNewData = {this.handleGetNewData}
+        />
+        <StartModal
+        {...this.state}
+        handleClose = {this.handleClose}
+        />
+        <Sidebar
+        {...this.state}
+        />
       </div>
     );
   }
