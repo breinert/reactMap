@@ -1,11 +1,9 @@
-/*google global*/
 import React, { Component } from 'react'
 import Maps from './components/Maps'
 import StartModal from './components/StartModal'
 import Sidebar from './components/Sidebar'
 import axios from 'axios'
 import './App.css';
-import { GoogleMap, Marker } from 'react-google-maps';
 
 class App extends Component {
   constructor(props) {
@@ -102,7 +100,6 @@ class App extends Component {
 
   handleMouseOver = (marker) => {
     marker.isOpen = true;
-    // google.maps.Animation.BOUNCE;
     this.setState({
       markers: Object.assign(this.state.markers, marker)
     })

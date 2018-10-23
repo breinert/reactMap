@@ -1,3 +1,4 @@
+/*global google*/
 import React from "react"
 import { withScriptjs, withGoogleMap, GoogleMap, BicyclingLayer, Marker, InfoWindow } from "react-google-maps"
 
@@ -14,7 +15,11 @@ const MyMapComponent = withScriptjs(withGoogleMap((props) =>
       position={{ lat: marker.lat, lng: marker.lng }}
       onMouseOver={() => props.handleMouseOver(marker)}
       onMouseOut={() => props.handleMouseOut(marker)}
-      onClick={() => props.handleGetNewData(marker)} >
+      onClick={() => props.handleGetNewData(marker)}
+      animation={marker.isOpen
+        ? google.maps.Animation.BOUNCE
+        : google.maps.Animation.null}
+      >
         {marker.isOpen &&
           <InfoWindow>
             <p>{props.markers.name}</p>
