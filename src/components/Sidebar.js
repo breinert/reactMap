@@ -19,9 +19,6 @@ const Sidebar = (props) => {
           >{marker.name}
           </button>
         ))}
-        <div className="venueOfInterest">
-        {props.venueOfInterest}
-        </div>
         </div>
     </div>
     )
