@@ -12,12 +12,13 @@ class App extends Component {
       show: true,
       click: 0,
       venues: [],
+      venueOfInterest: [],
       venueLocation: [],
       center: [
         {lat: 40.027587, lng: -83.0624}
       ],
       markers: [
-        {name: 'Antrimu Park', lat: 40.0784, lng: -83.0377},
+        {name: 'Antrim Park', lat: 40.0784, lng: -83.0377},
         {name: 'Park of Roses', lat: 40.0440, lng: -83.0253},
         {name: 'Clinton-Como Park', lat: 40.0261, lng: -83.0225},
         {name: 'Thompson Park', lat: 40.0438, lng: -83.0717},
@@ -25,13 +26,14 @@ class App extends Component {
         {name: 'Fancyburg Park', lat: 40.023258, lng: -83.087907},
         {name: 'Olentangy Trail', lat: 40.002127, lng: -83.021716},
       ],
-      updateSuperState: obj => {
-        this.setState(obj);
-      }
+      // updateSuperState: obj => {
+      //   this.setState(obj);
+      // }
     };
     this.handleClose = this.handleClose.bind(this);
     this.handleMouseOver = this.handleMouseOver.bind(this);
     this.handleGetNewData = this.handleGetNewData.bind(this);
+    this.handleMouseOut = this.handleMouseOut.bind(this);
   }
 
   getStores() {
@@ -42,7 +44,7 @@ class App extends Component {
       query: "coffee",
       limit: "5",
       ll: this.state.venueLocation,
-      v: "201811010",
+      v: "20181010"
     }
 
     axios.get(endPoint + new URLSearchParams(parameters))
@@ -59,13 +61,28 @@ class App extends Component {
           };
         });
         this.setState({ venues, markers });
-      console.log(this.state.venues, this.state.markers );
+      console.log(response, this.state.venues, this.state.markers );
     })
       .catch(error => {
         console.error("error", error)
       })
   }
+  getVenue(marker) {
+    const endPoint = `https://api.foursquare.com/v2/venues/${marker.id}?`
+    const parameters = {
+      client_id: "JDO1KAGDULQO3ETFJ4EDPEHN203BEDKSD1HB5UUKRDP2R3H2",
+      client_secret: "UWMFNIMGT33V31ZGCVI1GICMRK43DSYBJSNBNJTKC2ECKIHH",
+      v: "20181010"
+    }
 
+    axios.get(endPoint + new URLSearchParams(parameters))
+    .then(response => {
+      console.log(response);
+    })
+      .catch(error => {
+        console.error("error", error)
+      })
+  }
   handleClose = () => {
     this.setState({
       show: false
@@ -82,27 +99,29 @@ class App extends Component {
         venues: [],
         click: this.state.click + 1
       });
-      this.getStores()
+      this.getStores();
     } else {
-      console.log(marker);
+      this.getVenue(marker);
+      console.log(marker, marker.id);
     }
   }
 
-  handleMouseOut = () => {
+  handleMouseOut = (marker) => {
     const markers = this.state.markers.map(marker => {
       marker.isOpen = false;
       return marker;
     })
     this.setState({
       markers: Object.assign(this.state.markers, markers)
-    })
+    });
   }
 
   handleMouseOver = (marker) => {
+    // this.handleMouseOut();
     marker.isOpen = true;
     this.setState({
       markers: Object.assign(this.state.markers, marker)
-    })
+    });
   }
 
   render() {
@@ -110,8 +129,8 @@ class App extends Component {
       <div className="App">
         <Maps
         {...this.state}
-        handleMouseOver = {this.handleMouseOver}
         handleGetNewData = {this.handleGetNewData}
+        handleMouseOver = {this.handleMouseOver}
         handleMouseOut = {this.handleMouseOut}
         />
         <StartModal

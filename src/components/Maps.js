@@ -5,7 +5,7 @@ import { withScriptjs, withGoogleMap, GoogleMap, BicyclingLayer, Marker, InfoWin
 
 const MyMapComponent = withScriptjs(withGoogleMap((props) =>
   <GoogleMap
-    defaultZoom={13}
+    defaultZoom={12}
     defaultCenter={{ lat: 40.027587, lng: -83.0624 }}
     center={props.center[0] || props.center}
   >
@@ -21,7 +21,7 @@ const MyMapComponent = withScriptjs(withGoogleMap((props) =>
         : google.maps.Animation.null}
       >
         {marker.isOpen &&
-          <InfoWindow>
+          <InfoWindow >
             <p>{props.markers.name}</p>
           </InfoWindow>
           }
