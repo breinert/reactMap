@@ -9,24 +9,37 @@ const MyMapComponent = withScriptjs(withGoogleMap((props) =>
     defaultCenter={{ lat: 40.027587, lng: -83.0624 }}
     center={props.center[0] || props.center}
   >
-    {props.markers && props.markers.map((marker, idx) => (
-      <Marker
-      key={idx}
-      position={{ lat: marker.lat, lng: marker.lng }}
-      onMouseOver={() => props.handleMouseOver(marker)}
-      onMouseOut={() => props.handleMouseOut(marker)}
-      onClick={() => props.handleGetNewData(marker)}
-      animation={marker.isOpen
-        ? google.maps.Animation.BOUNCE
-        : google.maps.Animation.null}
-      >
-        {marker.isOpen &&
-          <InfoWindow >
-            <p>{props.markers.name}</p>
-          </InfoWindow>
-          }
-      </Marker>
-    ))}
+    {props.markers && props.markers.map((marker, idx) => {
+      const venueInfo = props.venues.find(venue => venue.venue.id === marker.id);
+      console.log(venueInfo, props.venues, props.markers);
+        return (
+          <Marker
+        key={idx}
+        position={{ lat: marker.lat, lng: marker.lng }}
+        onClick={() => props.handleMouseOver(marker)}
+        // onMouseOut={() => props.handleMouseOut(marker)}
+        onDblClick={() => props.handleGetNewData(marker)}
+        animation={marker.isOpen
+          ? google.maps.Animation.BOUNCE
+          : google.maps.Animation.null}
+        >
+          {marker.isOpen && (
+            <InfoWindow>
+              <p>{props.markers.name}</p>
+            </InfoWindow>
+          )}
+          {marker.isOpen && props.click !== 0 && (
+            <InfoWindow>
+              <React.Fragment>
+                <img src={`${venueInfo.bestPhoto.prefix}200x200${venueInfo.bestPhoto.suffix}`}
+                alt={"Venue"}/>
+                <p>{props.markers.name}</p>
+              </React.Fragment>
+            </InfoWindow>
+          )}
+        </Marker>
+      )}
+    )}
     <BicyclingLayer autoUpdate />
   </GoogleMap>
 ))

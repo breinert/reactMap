@@ -108,13 +108,13 @@ class App extends Component {
         client_secret: "UWMFNIMGT33V31ZGCVI1GICMRK43DSYBJSNBNJTKC2ECKIHH",
         v: "20181010"
       }
-  
+
       axios.get(endPoint + new URLSearchParams(parameters))
       .then(response => {
         const myVenue = Object.assign(venue, response.data.response.venue );
         this.setState({ venues: Object.assign(this.state.venues, myVenue),
         voi: !this.state.voi });
-        console.log(myVenue);
+        console.log(this.state.venues);
       })
       .catch(error => {
         console.error("error", error);
@@ -133,7 +133,7 @@ class App extends Component {
   }
 
   handleMouseOver = (marker) => {
-    // this.handleMouseOut();
+    this.handleMouseOut();
     marker.isOpen = true;
     this.setState({
       markers: Object.assign(this.state.markers, marker)
