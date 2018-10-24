@@ -4,14 +4,17 @@ import StartModal from './components/StartModal'
 import Sidebar from './components/Sidebar'
 import axios from 'axios'
 import './App.css';
+import VenueInfo from './components/VenueInfo';
 
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
       show: true,
+      voi: true,
       click: 0,
       venues: [],
+      // myVenue: [],
       venueOfInterest: [],
       venueLocation: [],
       center: [
@@ -61,32 +64,26 @@ class App extends Component {
           };
         });
         this.setState({ venues, markers });
-      console.log(response, this.state.venues, this.state.markers );
+      // console.log(response, this.state.venues, this.state.markers );
     })
       .catch(error => {
         console.error("error", error)
       })
   }
-  getVenue(marker) {
-    const endPoint = `https://api.foursquare.com/v2/venues/${marker.id}?`
-    const parameters = {
-      client_id: "JDO1KAGDULQO3ETFJ4EDPEHN203BEDKSD1HB5UUKRDP2R3H2",
-      client_secret: "UWMFNIMGT33V31ZGCVI1GICMRK43DSYBJSNBNJTKC2ECKIHH",
-      v: "20181010"
-    }
 
-    axios.get(endPoint + new URLSearchParams(parameters))
-    .then(response => {
-      console.log(response);
-    })
-      .catch(error => {
-        console.error("error", error)
-      })
-  }
+      // const venueOfInterest = myVenue.find(venue => {
+      //   return {
+      //     name: venue.name,
+      //     bestPhoto: venue.bestPhoto.suffix,
+      //     address: venue.location.address,
+      //     hours: venue.hours.isOpen,
+      //     url: venue.url
+      //   }
+      // })
+
+
   handleClose = () => {
-    this.setState({
-      show: false
-    })
+    this.setState({show: false})
   }
 
   handleGetNewData = (marker) => {
@@ -101,8 +98,27 @@ class App extends Component {
       });
       this.getStores();
     } else {
-      this.getVenue(marker);
-      console.log(marker, marker.id);
+      this.setState({
+        markers: Object.assign(this.state.markers, marker)
+      });
+      const venue = this.state.venues.find(venue => venue.venue.id === marker.id);
+      const endPoint = `https://api.foursquare.com/v2/venues/${marker.id}?`
+      const parameters = {
+        client_id: "JDO1KAGDULQO3ETFJ4EDPEHN203BEDKSD1HB5UUKRDP2R3H2",
+        client_secret: "UWMFNIMGT33V31ZGCVI1GICMRK43DSYBJSNBNJTKC2ECKIHH",
+        v: "20181010"
+      }
+  
+      axios.get(endPoint + new URLSearchParams(parameters))
+      .then(response => {
+        const myVenue = Object.assign(venue, response.data.response.venue );
+        this.setState({ venues: Object.assign(this.state.venues, myVenue),
+        voi: !this.state.voi });
+        console.log(myVenue);
+      })
+      .catch(error => {
+        console.error("error", error);
+      })
     }
   }
 
@@ -142,6 +158,9 @@ class App extends Component {
         handleGetNewData = {this.handleGetNewData}
         handleMouseOver = {this.handleMouseOver}
         handleMouseOut = {this.handleMouseOut}
+        />
+        <VenueInfo
+        {...this.state}
         />
       </div>
     );
