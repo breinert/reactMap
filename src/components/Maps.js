@@ -33,8 +33,8 @@ const MyMapComponent = withScriptjs(withGoogleMap((props) =>
               <figure>
                 <img src={`${venueInfo.bestPhoto.prefix}200x200${venueInfo.bestPhoto.suffix}`}
                 alt={"Venue"}/>
-                <figcaption>{venueInfo.name} 
-                {venueInfo.location.address} 
+                <figcaption>{venueInfo.name} {<br></br>}
+                {venueInfo.location.address} {<br></br>}
                 {venueInfo.hours.status}
                 <a href={`${venueInfo.url}`}>Link</a> </figcaption>
               </figure>

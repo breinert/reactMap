@@ -52,6 +52,12 @@
   border-radius: 1em;
 }
 
+figcaption {
+  display: flex;
+  flex-direction: column;
+  font: thick;
+}
+
 .modal {
   position: fixed;
   z-index: 1010;
