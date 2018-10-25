@@ -29,7 +29,8 @@ const MyMapComponent = withScriptjs(withGoogleMap((props) =>
             </InfoWindow>
           )}
           {marker.isOpen && props.click > 1 && (
-            <InfoWindow>
+            <InfoWindow
+            onCloseClick={() => props.handleCloseMarker(marker)}>
               <figure>
                 <img src={`${venueInfo.bestPhoto.prefix}200x200${venueInfo.bestPhoto.suffix}`}
                 alt={"Venue"}/>

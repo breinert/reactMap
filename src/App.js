@@ -115,6 +115,7 @@ class App extends Component {
     this.setState({
       markers: Object.assign(this.state.markers, markers)
     });
+    if (this.state.click === 2) this.setState({click: 1});
   }
 
   handleOnClick = (marker) => {
