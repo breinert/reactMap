@@ -4,7 +4,6 @@ import StartModal from './components/StartModal'
 import Sidebar from './components/Sidebar'
 import axios from 'axios'
 import './App.css';
-import VenueInfo from './components/VenueInfo';
 
 class App extends Component {
   constructor(props) {
@@ -130,6 +129,10 @@ class App extends Component {
   render() {
     return (
       <div className="App">
+        <Sidebar
+        {...this.state}
+        handleOnClick = {this.handleOnClick}
+        />
         <Maps
         {...this.state}
         handleOnClick = {this.handleOnClick}
@@ -138,13 +141,6 @@ class App extends Component {
         <StartModal
         {...this.state}
         handleClose = {this.handleClose}
-        />
-        <Sidebar
-        {...this.state}
-        handleOnClick = {this.handleOnClick}
-        />
-        <VenueInfo
-        {...this.state}
         />
       </div>
     );

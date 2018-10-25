@@ -5,7 +5,7 @@ const StartModal = (props) => {
   return (
     <div className={modal}>
       <div className="modal-content">
-        <h2>Click on a marker on the map or name in the list to find coffee shoppes near that biking area</h2>
+        <h2>Select a marker on the map or name in the list for information. Select again to find coffee shoppes near that biking area</h2>
         <button
         className="begin"
         onClick={props.handleClose}
