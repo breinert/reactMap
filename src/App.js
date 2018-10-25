@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import Maps from './components/Maps'
 import StartModal from './components/StartModal'
 import Sidebar from './components/Sidebar'
+import Reset from './components/Reset'
 import axios from 'axios'
 import './App.css';
 
@@ -9,8 +10,8 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      show: true,
-      voi: true,
+      showModal: true,
+      hover: false,
       click: 0,
       venues: [],
       venueLocation: [],
@@ -25,14 +26,13 @@ class App extends Component {
         {name: 'Burbank Park', lat: 40.0535, lng: -83.0846},
         {name: 'Fancyburg Park', lat: 40.023258, lng: -83.087907},
         {name: 'Olentangy Trail', lat: 40.002127, lng: -83.021716},
-      ],
-      // updateSuperState: obj => {
-      //   this.setState(obj);
-      // }
+      ]
     };
-    this.handleClose = this.handleClose.bind(this);
+    this.handleCloseModal = this.handleClose.bind(this);
     this.handleOnClick = this.handleOnClick.bind(this);
     this.handleCloseMarker = this.handleCloseMarker.bind(this);
+    this.handleMouseOver = this.handleMouseOver.bind(this);
+    this.handleReset = this.handleReset.bind(this);
   }
 
   getStores() {
@@ -68,7 +68,7 @@ class App extends Component {
   }
 
   handleClose = () => {
-    this.setState({show: false})
+    this.setState({showModal: false})
   }
 
   handleGetNewData = (marker) => {
@@ -127,9 +127,40 @@ class App extends Component {
     });
   }
 
+  handleMouseOver = () => {
+    this.setState({ hover: !this.state.hover })
+  }
+
+  handleReset = () => {
+    this.setState({
+      showModal: true,
+      hover: false,
+      click: 0,
+      venues: [],
+      venueLocation: [],
+      center: [
+        {lat: 40.027587, lng: -83.0624}
+      ],
+      markers: [
+        {name: 'Antrim Park', lat: 40.0784, lng: -83.0377},
+        {name: 'Park of Roses', lat: 40.0440, lng: -83.0253},
+        {name: 'Clinton-Como Park', lat: 40.0261, lng: -83.0225},
+        {name: 'Thompson Park', lat: 40.0438, lng: -83.0717},
+        {name: 'Burbank Park', lat: 40.0535, lng: -83.0846},
+        {name: 'Fancyburg Park', lat: 40.023258, lng: -83.087907},
+        {name: 'Olentangy Trail', lat: 40.002127, lng: -83.021716},
+      ]
+    })
+  }
+
   render() {
     return (
       <div className="App">
+        <Reset
+        {...this.state}
+        handleMouseOver = {this.handleMouseOver}
+        handleReset = {this.handleReset}
+        />
         <Sidebar
         {...this.state}
         handleOnClick = {this.handleOnClick}
@@ -141,7 +172,7 @@ class App extends Component {
         />
         <StartModal
         {...this.state}
-        handleClose = {this.handleClose}
+        handleCloseModal = {this.handleCloseModal}
         />
       </div>
     );

@@ -9,7 +9,7 @@ const MyMapComponent = withScriptjs(withGoogleMap((props) =>
     defaultCenter={{ lat: 40.027587, lng: -83.0624 }}
     center={props.center[0] || props.center}
   >
-  {props.markers && 
+  {props.markers &&
   props.markers.map((marker, idx) => {
     const venueInfo = props.venues.find(venue => venue.venue.id === marker.id);
     console.log(venueInfo);
@@ -37,7 +37,7 @@ const MyMapComponent = withScriptjs(withGoogleMap((props) =>
                 <figcaption>{venueInfo.name} {<br></br>}
                 {venueInfo.location.address} {<br></br>}
                 {venueInfo.hours.status}
-                <a href={`${venueInfo.url}`}>Link</a> </figcaption>
+                <a href={`${venueInfo.url}`} target="_blank" rel="noopener noreferrer">Link</a> </figcaption>
               </figure>
             </InfoWindow>
           )}
