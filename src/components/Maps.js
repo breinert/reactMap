@@ -9,32 +9,33 @@ const MyMapComponent = withScriptjs(withGoogleMap((props) =>
     defaultCenter={{ lat: 40.027587, lng: -83.0624 }}
     center={props.center[0] || props.center}
   >
-    {props.markers && props.markers.map((marker, idx) => {
-      const venueInfo = props.venues.find(venue => venue.venue.id === marker.id);
-      console.log(venueInfo, props.venues, props.markers);
-        return (
-          <Marker
+  {props.markers && props.markers.map((marker, idx) => {
+    const venueInfo = props.venues.find(venue => venue.venue.id === marker.id);
+    console.log(venueInfo);
+      return (
+        <Marker
         key={idx}
         position={{ lat: marker.lat, lng: marker.lng }}
-        onClick={() => props.handleMouseOver(marker)}
-        // onMouseOut={() => props.handleMouseOut(marker)}
-        onDblClick={() => props.handleGetNewData(marker)}
+        onClick={() => props.handleOnClick(marker)}
         animation={marker.isOpen
           ? google.maps.Animation.BOUNCE
           : google.maps.Animation.null}
         >
-          {marker.isOpen && (
+          {marker.isOpen && props.click <= 1 && (
             <InfoWindow>
               <p>{props.markers.name}</p>
             </InfoWindow>
           )}
-          {marker.isOpen && props.click !== 0 && (
+          {marker.isOpen && props.click > 1 && (
             <InfoWindow>
-              <React.Fragment>
+              <figure>
                 <img src={`${venueInfo.bestPhoto.prefix}200x200${venueInfo.bestPhoto.suffix}`}
                 alt={"Venue"}/>
-                <p>{props.markers.name}</p>
-              </React.Fragment>
+                <figcaption>{venueInfo.name} 
+                {venueInfo.location.address} 
+                {venueInfo.hours.status}
+                <a href={`${venueInfo.url}`}>Link</a> </figcaption>
+              </figure>
             </InfoWindow>
           )}
         </Marker>

@@ -14,8 +14,6 @@ class App extends Component {
       voi: true,
       click: 0,
       venues: [],
-      // myVenue: [],
-      venueOfInterest: [],
       venueLocation: [],
       center: [
         {lat: 40.027587, lng: -83.0624}
@@ -34,9 +32,7 @@ class App extends Component {
       // }
     };
     this.handleClose = this.handleClose.bind(this);
-    this.handleMouseOver = this.handleMouseOver.bind(this);
-    this.handleGetNewData = this.handleGetNewData.bind(this);
-    this.handleMouseOut = this.handleMouseOut.bind(this);
+    this.handleOnClick = this.handleOnClick.bind(this);
   }
 
   getStores() {
@@ -71,17 +67,6 @@ class App extends Component {
       })
   }
 
-      // const venueOfInterest = myVenue.find(venue => {
-      //   return {
-      //     name: venue.name,
-      //     bestPhoto: venue.bestPhoto.suffix,
-      //     address: venue.location.address,
-      //     hours: venue.hours.isOpen,
-      //     url: venue.url
-      //   }
-      // })
-
-
   handleClose = () => {
     this.setState({show: false})
   }
@@ -113,7 +98,7 @@ class App extends Component {
       .then(response => {
         const myVenue = Object.assign(venue, response.data.response.venue );
         this.setState({ venues: Object.assign(this.state.venues, myVenue),
-        voi: !this.state.voi });
+        click: this.state.click + 1 });
         console.log(this.state.venues);
       })
       .catch(error => {
@@ -132,7 +117,8 @@ class App extends Component {
     });
   }
 
-  handleMouseOver = (marker) => {
+  handleOnClick = (marker) => {
+    marker.isOpen ? this.handleGetNewData(marker) :
     this.handleMouseOut();
     marker.isOpen = true;
     this.setState({
@@ -145,9 +131,7 @@ class App extends Component {
       <div className="App">
         <Maps
         {...this.state}
-        handleGetNewData = {this.handleGetNewData}
-        handleMouseOver = {this.handleMouseOver}
-        handleMouseOut = {this.handleMouseOut}
+        handleOnClick = {this.handleOnClick}
         />
         <StartModal
         {...this.state}
@@ -155,9 +139,7 @@ class App extends Component {
         />
         <Sidebar
         {...this.state}
-        handleGetNewData = {this.handleGetNewData}
-        handleMouseOver = {this.handleMouseOver}
-        handleMouseOut = {this.handleMouseOut}
+        handleOnClick = {this.handleOnClick}
         />
         <VenueInfo
         {...this.state}
