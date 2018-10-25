@@ -33,6 +33,7 @@ class App extends Component {
     };
     this.handleClose = this.handleClose.bind(this);
     this.handleOnClick = this.handleOnClick.bind(this);
+    this.handleCloseMarker = this.handleCloseMarker.bind(this);
   }
 
   getStores() {
@@ -107,7 +108,7 @@ class App extends Component {
     }
   }
 
-  handleMouseOut = (marker) => {
+  handleCloseMarker = () => {
     const markers = this.state.markers.map(marker => {
       marker.isOpen = false;
       return marker;
@@ -119,7 +120,7 @@ class App extends Component {
 
   handleOnClick = (marker) => {
     marker.isOpen ? this.handleGetNewData(marker) :
-    this.handleMouseOut();
+    this.handleCloseMarker();
     marker.isOpen = true;
     this.setState({
       markers: Object.assign(this.state.markers, marker)
@@ -132,6 +133,7 @@ class App extends Component {
         <Maps
         {...this.state}
         handleOnClick = {this.handleOnClick}
+        handleCloseMarker = {this.handleCloseMarker}
         />
         <StartModal
         {...this.state}

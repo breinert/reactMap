@@ -9,7 +9,8 @@ const MyMapComponent = withScriptjs(withGoogleMap((props) =>
     defaultCenter={{ lat: 40.027587, lng: -83.0624 }}
     center={props.center[0] || props.center}
   >
-  {props.markers && props.markers.map((marker, idx) => {
+  {props.markers && 
+  props.markers.map((marker, idx) => {
     const venueInfo = props.venues.find(venue => venue.venue.id === marker.id);
     console.log(venueInfo);
       return (
@@ -22,7 +23,8 @@ const MyMapComponent = withScriptjs(withGoogleMap((props) =>
           : google.maps.Animation.null}
         >
           {marker.isOpen && props.click <= 1 && (
-            <InfoWindow>
+            <InfoWindow
+            onCloseClick={() => props.handleCloseMarker(marker)}>
               <p>{props.markers.name}</p>
             </InfoWindow>
           )}
