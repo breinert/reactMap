@@ -12,7 +12,6 @@ const MyMapComponent = withScriptjs(withGoogleMap((props) =>
   {props.markers &&
   props.markers.map((marker, idx) => {
     const venueInfo = props.venues.find(venue => venue.venue.id === marker.id);
-    console.log(venueInfo);
       return (
         <Marker
         key={idx}

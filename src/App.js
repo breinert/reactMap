@@ -19,13 +19,13 @@ class App extends Component {
         {lat: 40.027587, lng: -83.0624}
       ],
       markers: [
-        {name: 'Antrim Park', lat: 40.0784, lng: -83.0377},
-        {name: 'Park of Roses', lat: 40.0440, lng: -83.0253},
-        {name: 'Clinton-Como Park', lat: 40.0261, lng: -83.0225},
-        {name: 'Thompson Park', lat: 40.0438, lng: -83.0717},
-        {name: 'Burbank Park', lat: 40.0535, lng: -83.0846},
-        {name: 'Fancyburg Park', lat: 40.023258, lng: -83.087907},
-        {name: 'Olentangy Trail', lat: 40.002127, lng: -83.021716},
+        {name: 'Antrim Park', lat: 40.0784, lng: -83.0377, isOpen: false},
+        {name: 'Park of Roses', lat: 40.0440, lng: -83.0253, isOpen: false},
+        {name: 'Clinton-Como Park', lat: 40.0261, lng: -83.0225, isOpen: false},
+        {name: 'Thompson Park', lat: 40.0438, lng: -83.0717, isOpen: false},
+        {name: 'Burbank Park', lat: 40.0535, lng: -83.0846, isOpen: false},
+        {name: 'Fancyburg Park', lat: 40.023258, lng: -83.087907, isOpen: false},
+        {name: 'Olentangy Trail', lat: 40.002127, lng: -83.021716, isOpen: false},
       ]
     };
     this.handleCloseModal = this.handleClose.bind(this);
@@ -60,7 +60,6 @@ class App extends Component {
           };
         });
         this.setState({ venues, markers });
-      // console.log(response, this.state.venues, this.state.markers );
     })
       .catch(error => {
         console.error("error", error)
@@ -73,13 +72,14 @@ class App extends Component {
 
   handleGetNewData = (marker) => {
     if (this.state.click === 0) {
+      const venueLocation = [marker.lat, marker.lng];
+      const center = { lat: marker.lat, lng: marker.lng };
+      const markers = [];
+      const names = [];
+      const venues = [];
+      const click = this.state.click + 1
       this.setState({
-        venueLocation: [marker.lat, marker.lng],
-        center: { lat: marker.lat, lng: marker.lng },
-        markers: [],
-        names: [],
-        venues: [],
-        click: this.state.click + 1
+        venueLocation, center, markers, names, venues, click
       });
       this.getStores();
     } else {
@@ -142,13 +142,13 @@ class App extends Component {
         {lat: 40.027587, lng: -83.0624}
       ],
       markers: [
-        {name: 'Antrim Park', lat: 40.0784, lng: -83.0377},
-        {name: 'Park of Roses', lat: 40.0440, lng: -83.0253},
-        {name: 'Clinton-Como Park', lat: 40.0261, lng: -83.0225},
-        {name: 'Thompson Park', lat: 40.0438, lng: -83.0717},
-        {name: 'Burbank Park', lat: 40.0535, lng: -83.0846},
-        {name: 'Fancyburg Park', lat: 40.023258, lng: -83.087907},
-        {name: 'Olentangy Trail', lat: 40.002127, lng: -83.021716},
+        {name: 'Antrim Park', lat: 40.0784, lng: -83.0377, isOpen: false},
+        {name: 'Park of Roses', lat: 40.0440, lng: -83.0253, isOpen: false},
+        {name: 'Clinton-Como Park', lat: 40.0261, lng: -83.0225, isOpen: false},
+        {name: 'Thompson Park', lat: 40.0438, lng: -83.0717, isOpen: false},
+        {name: 'Burbank Park', lat: 40.0535, lng: -83.0846, isOpen: false},
+        {name: 'Fancyburg Park', lat: 40.023258, lng: -83.087907, isOpen: false},
+        {name: 'Olentangy Trail', lat: 40.002127, lng: -83.021716, isOpen: false},
       ]
     })
   }

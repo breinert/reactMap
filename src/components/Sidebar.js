@@ -5,20 +5,18 @@ const Sidebar = (props) => {
   <div className="sidebar">
     <h2 className="title">Venues</h2>
       <ol className="venueList">
-      {props.markers && props.markers.map((marker, idx) => {
-        const venueInfo = props.venues.find(venue => venue.venue.id === marker.id);
-        console.log(venueInfo);
+        {props.markers && props.markers.map((marker, idx) => {
           return (
             <li
             className="listItem"
             key={idx}
             position={{ lat: marker.lat, lng: marker.lng }}
-            onClick={() => props.handleOnClick(marker)}
+            onClick={() => {if (marker.isOpen === false) {props.handleOnClick(marker)}}}
             tabIndex={2}
             >{marker.name}
             </li>
           )}
-      )}
+        )}
       </ol>
   </div>
   )

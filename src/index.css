@@ -36,6 +36,10 @@
   border-radius: 1em;
 }
 
+li:isOpen {
+  background-color: blue;
+}
+
 figcaption {
   display: flex;
   flex-direction: column;
