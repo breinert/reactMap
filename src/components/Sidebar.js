@@ -2,9 +2,11 @@ import React from 'react'
 
 const Sidebar = (props) => {
   return (
-  <div className="sidebar">
-    <h2 className="title">Venues</h2>
+    <div className="sidebar">
+    <h2 className="title">Cycle And Coffee</h2>
+    <h2 className="venuebar">Venues</h2>
       <ol className="venueList">
+      {/* map the markers to the sidebar venue list */}
         {props.markers && props.markers.map((marker, idx) => {
           return (
             <li

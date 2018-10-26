@@ -10,11 +10,14 @@
 .sidebar {
   display: block;
   width: 24%;
-  cursor: pointer;
 }
 
 .title {
-  background-color: darkmagenta;
+  border: 0.2em solid black;
+}
+
+.venuebar {
+  background-color: blue;
   color: white;
   border: 0.2em solid black;
   margin: 1em auto;
@@ -32,18 +35,14 @@
   font-size: 1em;
   color: white;
   margin: 2em auto;
-  padding: 1em;
+  padding: 0.5em;
   border-radius: 1em;
+  border: 0.1em solid black;
+  cursor: pointer;
 }
 
-li:isOpen {
+li:hover {
   background-color: blue;
-}
-
-figcaption {
-  display: flex;
-  flex-direction: column;
-  font: thick;
 }
 
 .modal {

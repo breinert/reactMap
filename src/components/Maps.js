@@ -7,8 +7,10 @@ const MyMapComponent = withScriptjs(withGoogleMap((props) =>
   <GoogleMap
     defaultZoom={12}
     defaultCenter={{ lat: 40.027587, lng: -83.0624 }}
+    // move center of map to chosen location
     center={props.center[0] || props.center}
   >
+  {/* map the marker info to the map markers */}
   {props.markers &&
   props.markers.map((marker, idx) => {
     const venueInfo = props.venues.find(venue => venue.venue.id === marker.id);
@@ -17,16 +19,19 @@ const MyMapComponent = withScriptjs(withGoogleMap((props) =>
         key={idx}
         position={{ lat: marker.lat, lng: marker.lng }}
         onClick={() => props.handleOnClick(marker)}
+        // bounce marker when selected
         animation={marker.isOpen
           ? google.maps.Animation.BOUNCE
           : google.maps.Animation.null}
         >
+        {/* if biking location are on map, handle click */}
           {marker.isOpen && props.click <= 1 && (
             <InfoWindow
             onCloseClick={() => props.handleCloseMarker(marker)}>
               <p>{props.markers.name}</p>
             </InfoWindow>
           )}
+          {/* if coffee shop location are on map, handle click */}
           {marker.isOpen && props.click > 1 && (
             <InfoWindow
             onCloseClick={() => props.handleCloseMarker(marker)}>

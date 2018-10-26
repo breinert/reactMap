@@ -35,6 +35,7 @@ class App extends Component {
     this.handleReset = this.handleReset.bind(this);
   }
 
+  // function to get coffee shopes at chosen location using clicked marker lat & lng
   getStores() {
     const endPoint = "https://api.foursquare.com/v2/venues/explore?"
     const parameters = {
@@ -46,6 +47,7 @@ class App extends Component {
       v: "20181010"
     }
 
+    // use axios to retrieve API data
     axios.get(endPoint + new URLSearchParams(parameters))
     .then(response => {
         const venues = response.data.response.groups[0].items;
@@ -66,11 +68,13 @@ class App extends Component {
       })
   }
 
+  // close the start modal
   handleClose = () => {
     this.setState({showModal: false})
   }
 
   handleGetNewData = (marker) => {
+    // set state and call function to find coffee shopes
     if (this.state.click === 0) {
       const venueLocation = [marker.lat, marker.lng];
       const center = { lat: marker.lat, lng: marker.lng };
@@ -83,6 +87,7 @@ class App extends Component {
       });
       this.getStores();
     } else {
+      // set state and call function for details of one store
       this.setState({
         markers: Object.assign(this.state.markers, marker)
       });
@@ -94,6 +99,7 @@ class App extends Component {
         v: "20181010"
       }
 
+      // axios call for detail info
       axios.get(endPoint + new URLSearchParams(parameters))
       .then(response => {
         const myVenue = Object.assign(venue, response.data.response.venue );
@@ -107,6 +113,17 @@ class App extends Component {
     }
   }
 
+  // check to see if marker is selected, if yes then get data
+  handleOnClick = (marker) => {
+    marker.isOpen ? this.handleGetNewData(marker) :
+    this.handleCloseMarker();
+    marker.isOpen = true;
+    this.setState({
+      markers: Object.assign(this.state.markers, marker)
+    });
+  }
+
+  // if marker isOpen, close
   handleCloseMarker = () => {
     const markers = this.state.markers.map(marker => {
       marker.isOpen = false;
@@ -118,19 +135,12 @@ class App extends Component {
     if (this.state.click === 2) this.setState({click: 1});
   }
 
-  handleOnClick = (marker) => {
-    marker.isOpen ? this.handleGetNewData(marker) :
-    this.handleCloseMarker();
-    marker.isOpen = true;
-    this.setState({
-      markers: Object.assign(this.state.markers, marker)
-    });
-  }
-
+  // mouseover for reset button
   handleMouseOver = () => {
     this.setState({ hover: !this.state.hover })
   }
 
+  // set state to initial state
   handleReset = () => {
     this.setState({
       showModal: true,
