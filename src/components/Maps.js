@@ -19,6 +19,7 @@ const MyMapComponent = withScriptjs(withGoogleMap((props) =>
         key={idx}
         position={{ lat: marker.lat, lng: marker.lng }}
         onClick={() => props.handleOnClick(marker)}
+        // options={{icon:`${marker.icon}`}}
         // bounce marker when selected
         animation={marker.isOpen
           ? google.maps.Animation.BOUNCE

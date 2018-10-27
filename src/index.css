@@ -97,7 +97,14 @@ button {
   border-radius: 10%;
   font-size: 1.5em;
 }
+
 button:hover {
   background-color: blue;
   color: black;
+}
+
+.filterButton {
+  font-size: 1em;
+  padding: 0;
+  margin: 0;
 }

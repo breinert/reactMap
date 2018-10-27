@@ -4,6 +4,7 @@ import StartModal from './components/StartModal'
 import Sidebar from './components/Sidebar'
 import Reset from './components/Reset'
 import axios from 'axios'
+import escapeRegExp from 'escape-string-regexp'
 import './App.css';
 
 class App extends Component {
@@ -12,8 +13,10 @@ class App extends Component {
     this.state = {
       showModal: true,
       hover: false,
+      query: "",
       click: 0,
       venues: [],
+      showingVenues: [],
       venueLocation: [],
       center: [
         {lat: 40.027587, lng: -83.0624}
@@ -32,6 +35,8 @@ class App extends Component {
     this.handleOnClick = this.handleOnClick.bind(this);
     this.handleCloseMarker = this.handleCloseMarker.bind(this);
     this.handleMouseOver = this.handleMouseOver.bind(this);
+    this.updateQuery = this.updateQuery.bind(this);
+    this.clearQuery = this.clearQuery.bind(this);
     this.handleReset = this.handleReset.bind(this);
   }
 
@@ -105,7 +110,6 @@ class App extends Component {
         const myVenue = Object.assign(venue, response.data.response.venue );
         this.setState({ venues: Object.assign(this.state.venues, myVenue),
         click: this.state.click + 1 });
-        console.log(this.state.venues);
       })
       .catch(error => {
         console.error("error", error);
@@ -140,13 +144,38 @@ class App extends Component {
     this.setState({ hover: !this.state.hover })
   }
 
+  updateQuery = (query) => {
+    this.setState({
+      query: query.trim()
+    })
+    this.updateSearchedVenues(query);
+  }
+
+  updateSearchedVenues = (query) => {
+    if (query) {
+      const match = new RegExp(escapeRegExp(this.props.query), 'i')
+      this.setState({
+        showingVenues: Object.assign(this.state.markers.filter((marker) => match.test(marker.name)))
+      })
+    } else {
+      this.setState({
+        showingVenues: this.state.markers
+    })
+  }
+  }
+  clearQuery = () => {
+    this.setState({query: ""})
+  }
+
   // set state to initial state
   handleReset = () => {
     this.setState({
       showModal: true,
       hover: false,
+      query: "",
       click: 0,
       venues: [],
+      showingVenues: [],
       venueLocation: [],
       center: [
         {lat: 40.027587, lng: -83.0624}
@@ -174,6 +203,8 @@ class App extends Component {
         <Sidebar
         {...this.state}
         handleOnClick = {this.handleOnClick}
+        updateQuery = {this.updateQuery}
+        clearQuery = {this.clearQuery}
         />
         <Maps
         {...this.state}

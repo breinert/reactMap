@@ -1,13 +1,19 @@
 import React from 'react'
+import SearchVenues from './SearchVenues'
 
 const Sidebar = (props) => {
   return (
     <div className="sidebar">
     <h2 className="title">Cycle And Coffee</h2>
     <h2 className="venuebar">Venues</h2>
+      <SearchVenues
+      {...props.markers}
+      {...props.showingVenues}
+      {...props.query}
+      />
       <ol className="venueList">
       {/* map the markers to the sidebar venue list */}
-        {props.markers && props.markers.map((marker, idx) => {
+        {props.showingVenues && props.showingVenues.map((marker, idx) => {
           return (
             <li
             className="listItem"
@@ -23,4 +29,5 @@ const Sidebar = (props) => {
   </div>
   )
 }
+
 export default Sidebar
