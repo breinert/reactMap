@@ -7,13 +7,17 @@ const Sidebar = (props) => {
     <h2 className="title">Cycle And Coffee</h2>
     <h2 className="venuebar">Venues</h2>
       <SearchVenues
-      {...props.markers}
-      {...props.showingVenues}
-      {...props.query}
+      markers = {props.markers}
+      showinVenues = {props.showingVenues}
+      query = {props.query}
+      click = {props.click}
+      updateQuery = {props.updateQuery}
+      clearQuery = {props.clearQuery}
       />
       <ol className="venueList">
-      {/* map the markers to the sidebar venue list */}
-        {props.showingVenues && props.showingVenues.map((marker, idx) => {
+      {/* put the venues on the sidebar */}
+        {props.showingVenues
+        && props.showingVenues.map((marker, idx) => {
           return (
             <li
             className="listItem"

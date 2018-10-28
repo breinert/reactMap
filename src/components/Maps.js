@@ -11,15 +11,14 @@ const MyMapComponent = withScriptjs(withGoogleMap((props) =>
     center={props.center[0] || props.center}
   >
   {/* map the marker info to the map markers */}
-  {props.markers &&
-  props.markers.map((marker, idx) => {
+  {props.showingVenues &&
+  props.showingVenues.map((marker, idx) => {
     const venueInfo = props.venues.find(venue => venue.venue.id === marker.id);
       return (
         <Marker
         key={idx}
         position={{ lat: marker.lat, lng: marker.lng }}
         onClick={() => props.handleOnClick(marker)}
-        // options={{icon:`${marker.icon}`}}
         // bounce marker when selected
         animation={marker.isOpen
           ? google.maps.Animation.BOUNCE
@@ -29,7 +28,7 @@ const MyMapComponent = withScriptjs(withGoogleMap((props) =>
           {marker.isOpen && props.click <= 1 && (
             <InfoWindow
             onCloseClick={() => props.handleCloseMarker(marker)}>
-              <p>{props.markers.name}</p>
+              <p>{props.showingVenues.name}</p>
             </InfoWindow>
           )}
           {/* if coffee shop location are on map, handle click */}

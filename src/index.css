@@ -73,7 +73,7 @@ li:hover {
   margin: 15% auto;
   padding: 20px;
   border: 1px solid black;
-  width: 80%;
+  width: 60%;
   z-index: 1000;
 }
 
@@ -105,6 +105,5 @@ button:hover {
 
 .filterButton {
   font-size: 1em;
-  padding: 0;
-  margin: 0;
+  padding: 0.5em;
 }

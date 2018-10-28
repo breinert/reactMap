@@ -1,26 +1,23 @@
 import React from 'react'
 
 const SearchVenues = (props) => {
-  const searchWrapper = props.click === 1 ? 'searchWrapper display-block' : 'searchWrapper display-none';
-  // let showingVenues
+  // display searchbox if coffee locations are listed
+  const searchWrapper = props.click >= 1 ? 'searchWrapper display-block' : 'searchWrapper display-none';
 
   return (
     <div className={searchWrapper}>
         <input
+        id="filter"
         type="text"
         placeholder="Search by name"
         value={props.query}
         onChange={(event) => props.updateQuery(event.target.value)}
         />
-        {props.showingVenues.length !== props.markers.length && (
-          <div className="showingVenues">
-            <span>Now Showing {props.showingVenues.length} of {props.markers.length}. </span>
-            <button
-            className="filterButton"
-            onClick={props.clearQuery}>Show all</button>
-          </div>
-        )}
-      </div>
+        {/* reset the search */}
+        <button
+        className="filterButton"
+        onClick={() => props.clearQuery()}>Show all</button>
+    </div>
   )
 }
 export default SearchVenues

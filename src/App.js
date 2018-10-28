@@ -16,7 +16,15 @@ class App extends Component {
       query: "",
       click: 0,
       venues: [],
-      showingVenues: [],
+      showingVenues: [
+        {name: 'Antrim Park', lat: 40.0784, lng: -83.0377, isOpen: false},
+        {name: 'Park of Roses', lat: 40.0440, lng: -83.0253, isOpen: false},
+        {name: 'Clinton-Como Park', lat: 40.0261, lng: -83.0225, isOpen: false},
+        {name: 'Thompson Park', lat: 40.0438, lng: -83.0717, isOpen: false},
+        {name: 'Burbank Park', lat: 40.0535, lng: -83.0846, isOpen: false},
+        {name: 'Fancyburg Park', lat: 40.023258, lng: -83.087907, isOpen: false},
+        {name: 'Olentangy Trail', lat: 40.002127, lng: -83.021716, isOpen: false},
+      ],
       venueLocation: [],
       center: [
         {lat: 40.027587, lng: -83.0624}
@@ -47,7 +55,7 @@ class App extends Component {
       client_id: "JDO1KAGDULQO3ETFJ4EDPEHN203BEDKSD1HB5UUKRDP2R3H2",
       client_secret: "UWMFNIMGT33V31ZGCVI1GICMRK43DSYBJSNBNJTKC2ECKIHH",
       query: "coffee",
-      limit: "5",
+      limit: "10",
       ll: this.state.venueLocation,
       v: "20181010"
     }
@@ -66,7 +74,8 @@ class App extends Component {
             isVisible: true
           };
         });
-        this.setState({ venues, markers });
+        const showingVenues = markers;
+        this.setState({ venues, markers, showingVenues });
     })
       .catch(error => {
         console.error("error", error)
@@ -78,8 +87,8 @@ class App extends Component {
     this.setState({showModal: false})
   }
 
+  // set state and call function to find coffee shopes
   handleGetNewData = (marker) => {
-    // set state and call function to find coffee shopes
     if (this.state.click === 0) {
       const venueLocation = [marker.lat, marker.lng];
       const center = { lat: marker.lat, lng: marker.lng };
@@ -123,18 +132,18 @@ class App extends Component {
     this.handleCloseMarker();
     marker.isOpen = true;
     this.setState({
-      markers: Object.assign(this.state.markers, marker)
+      showingVenues: Object.assign(this.state.showingVenues, marker)
     });
   }
 
   // if marker isOpen, close
   handleCloseMarker = () => {
-    const markers = this.state.markers.map(marker => {
+    const showingVenues = this.state.showingVenues.map(marker => {
       marker.isOpen = false;
       return marker;
     })
     this.setState({
-      markers: Object.assign(this.state.markers, markers)
+      showingVenues: Object.assign(this.state.showingVenues, showingVenues)
     });
     if (this.state.click === 2) this.setState({click: 1});
   }
@@ -144,6 +153,7 @@ class App extends Component {
     this.setState({ hover: !this.state.hover })
   }
 
+  // update the query state to match the input  
   updateQuery = (query) => {
     this.setState({
       query: query.trim()
@@ -151,20 +161,26 @@ class App extends Component {
     this.updateSearchedVenues(query);
   }
 
+  // make search lower-case and filter visible venues that match search
   updateSearchedVenues = (query) => {
-    if (query) {
-      const match = new RegExp(escapeRegExp(this.props.query), 'i')
+    if (this.state.query) {
+      const match = new RegExp(escapeRegExp(this.state.query), 'i')
       this.setState({
-        showingVenues: Object.assign(this.state.markers.filter((marker) => match.test(marker.name)))
+        showingVenues: Object.assign(this.state.showingVenues.filter((marker) => match.test(marker.name)))
       })
     } else {
       this.setState({
         showingVenues: this.state.markers
-    })
+      })
+    }
   }
-  }
+
+  // reset the searchbox
   clearQuery = () => {
-    this.setState({query: ""})
+    this.setState({
+      query: "",
+      showingVenues: this.state.markers
+    })
   }
 
   // set state to initial state
@@ -175,7 +191,15 @@ class App extends Component {
       query: "",
       click: 0,
       venues: [],
-      showingVenues: [],
+      showingVenues: [
+        {name: 'Antrim Park', lat: 40.0784, lng: -83.0377, isOpen: false},
+        {name: 'Park of Roses', lat: 40.0440, lng: -83.0253, isOpen: false},
+        {name: 'Clinton-Como Park', lat: 40.0261, lng: -83.0225, isOpen: false},
+        {name: 'Thompson Park', lat: 40.0438, lng: -83.0717, isOpen: false},
+        {name: 'Burbank Park', lat: 40.0535, lng: -83.0846, isOpen: false},
+        {name: 'Fancyburg Park', lat: 40.023258, lng: -83.087907, isOpen: false},
+        {name: 'Olentangy Trail', lat: 40.002127, lng: -83.021716, isOpen: false},
+      ],
       venueLocation: [],
       center: [
         {lat: 40.027587, lng: -83.0624}
