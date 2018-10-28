@@ -7,6 +7,7 @@ const Reset = (props) => {
   return (
     <div className="reset">
       <button
+      aria-label="reset"
       z-index="100"
       tabIndex="1"
       onMouseOver={() => props.handleMouseOver()}
@@ -14,7 +15,8 @@ const Reset = (props) => {
       onClick={() => props.handleReset()}
       >&#9776;
     </button>
-    <div className={tooltip}>Restart</div>
+    <div className={tooltip}
+    >Restart</div>
     </div>
   )
 

@@ -10,12 +10,14 @@ const SearchVenues = (props) => {
         id="filter"
         type="text"
         placeholder="Search by name"
+        role="search"
         value={props.query}
         onChange={(event) => props.updateQuery(event.target.value)}
         />
         {/* reset the search */}
         <button
         className="filterButton"
+        aria-label="search reset"
         onClick={() => props.clearQuery()}>Show all</button>
     </div>
   )
