@@ -78,7 +78,7 @@ class App extends Component {
         this.setState({ venues, markers, showingVenues });
     })
       .catch(error => {
-        console.error("error", error)
+        alert("Your information could not be obtained. Please restart the app to try again.");
       })
   }
 
@@ -121,7 +121,7 @@ class App extends Component {
         click: this.state.click + 1 });
       })
       .catch(error => {
-        console.error("error", error);
+        alert("Your information could not be obtained. Please restart the app to try again.")
       })
     }
   }
