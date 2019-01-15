@@ -13,7 +13,7 @@ Open a terminal and navigate to the reactmap folder. Run `npm install` to instal
 
 ## Dependencies
 
-The dependencies required can be installed using `npm install`. This project requires "axios" version "^0.18.0", "react" version "^16.5.2", "react-dom" version "^16.5.2", "react-google-maps" version "^9.4.5", "escape-string-regexp" version "^1.0.5", and "react-scripts" version "2.0.5". Google Maps Api and Foursquare API are also required for proper functioning.
+The dependencies required can be installed using `npm install`. This project requires "axios" version "^0.18.0", "react" version "^16.7.0", "react-dom" version "^16.7.0", "react-google-maps" version "^9.4.5", "escape-string-regexp" version "^1.0.5", and "react-scripts" version "2.1.3". Google Maps Api and Foursquare API are also required for proper functioning.
 
 ## Known-Bugs
 
